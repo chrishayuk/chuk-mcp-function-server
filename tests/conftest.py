@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # tests/conftest.py
 """
-Simple pytest configuration for chuk_mcp_server tests.
+Simple pytest configuration for chuk_mcp_function_server tests.
 """
 
 import os
@@ -30,10 +30,10 @@ print(f"Debug: Python path: {sys.path[:3]}...")
 
 # Try to import and see what happens
 try:
-    import chuk_mcp_server
-    print(f"Debug: Successfully imported chuk_mcp_server from {chuk_mcp_server.__file__ if hasattr(chuk_mcp_server, '__file__') else 'unknown location'}")
+    import chuk_mcp_function_server
+    print(f"Debug: Successfully imported chuk_mcp_function_server from {chuk_mcp_function_server.__file__ if hasattr(chuk_mcp_function_server, '__file__') else 'unknown location'}")
 except ImportError as e:
-    print(f"Debug: Failed to import chuk_mcp_server: {e}")
+    print(f"Debug: Failed to import chuk_mcp_function_server: {e}")
     # List what's actually in the src directory
     if src_dir.exists():
         print(f"Debug: Contents of {src_dir}: {list(src_dir.iterdir())}")
@@ -41,7 +41,7 @@ except ImportError as e:
         print(f"Debug: {src_dir} does not exist!")
 
 try:
-    from chuk_mcp_server import _version
+    from chuk_mcp_function_server import _version
     print(f"Debug: Successfully imported _version module")
 except ImportError as e:
     print(f"Debug: Failed to import _version: {e}")

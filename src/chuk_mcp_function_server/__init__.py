@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# src/chuk_mcp_server/__init__.py
+# src/chuk_mcp_function_server/__init__.py
 """
 Chuk MCP Server - Generic Infrastructure
 
@@ -16,7 +16,7 @@ __description__ = "Generic configurable MCP server infrastructure"
 
 # Core exports
 from .config import ServerConfig, load_configuration_from_sources
-from .function_server.function_filter import (
+from .function_filter import (
     FunctionFilter, 
     FunctionSpec, 
     GenericFunctionSpec
@@ -54,7 +54,7 @@ __all__ = [
 
 # Package metadata
 PACKAGE_INFO = {
-    "name": "chuk-mcp-server",
+    "name": "chuk-mcp-function-server",
     "version": __version__,
     "description": __description__,
     "author": __author__,
@@ -141,10 +141,10 @@ def print_dependency_status():
     if missing_optional:
         print("\n💡 To install missing optional dependencies:")
         if "http" in missing_optional:
-            print("   pip install chuk-mcp-server[http]  # For HTTP transport")
+            print("   pip install chuk-mcp-function-server[http]  # For HTTP transport")
         if "dev" in missing_optional:
-            print("   pip install chuk-mcp-server[dev]   # For development")
-        print("   pip install chuk-mcp-server[full]  # Install all optional deps")
+            print("   pip install chuk-mcp-function-server[dev]   # For development")
+        print("   pip install chuk-mcp-function-server[full]  # Install all optional deps")
 
 # Convenience functions for quick server creation
 def create_server(server_class=None, config_file=None, **kwargs):

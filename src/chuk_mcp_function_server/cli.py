@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# src/chuk_mcp_server/cli.py
+# src/chuk_mcp_function_server/cli.py
 """
 Generic command line interface for MCP servers.
 This provides a base CLI that can be extended by domain-specific servers.

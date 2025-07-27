@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# src/chuk_mcp_server/config.py
+# src/chuk_mcp_function_server/config.py
 """
 Server configuration management with multiple loading strategies.
 """

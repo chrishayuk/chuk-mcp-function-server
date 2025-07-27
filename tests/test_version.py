@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # tests/test_version.py
 """
-Unit tests for the version module of chuk_mcp_server.
+Unit tests for the version module of chuk_mcp_function_server.
 """
 
 import os
@@ -15,7 +15,7 @@ print(f"Debug: Current working directory: {os.getcwd()}")
 
 # Import the module under test
 try:
-    from chuk_mcp_server._version import (
+    from chuk_mcp_function_server._version import (
         get_version,
         get_version_info,
         _get_version_from_metadata,
@@ -29,7 +29,7 @@ except ImportError as e:
     print(f"Debug: Import error details: {e}")
     print(f"Debug: Available modules in sys.modules: {[m for m in sys.modules.keys() if 'chuk' in m]}")
     # Don't skip, let the test fail with a clear error
-    raise ImportError(f"Could not import chuk_mcp_server._version: {e}. Check that the package is properly installed or the src directory is in the Python path.")
+    raise ImportError(f"Could not import chuk_mcp_function_server._version: {e}. Check that the package is properly installed or the src directory is in the Python path.")
 
 class TestVersionConstants:
     """Test basic version constants and functions."""
@@ -65,21 +65,21 @@ class TestEnvironmentVersionDetection:
         """Test reading version from environment variable."""
         test_version = "4.5.6-test"
         
-        with patch.dict(os.environ, {'CHUK_MCP_SERVER_VERSION': test_version}):
+        with patch.dict(os.environ, {'chuk_mcp_function_server_VERSION': test_version}):
             version = _get_version_from_env()
             assert version == test_version
     
     def test_env_variable_absent(self):
         """Test behavior when environment variable is not set."""
         # Create a clean environment without our test variable
-        clean_env = {k: v for k, v in os.environ.items() if k != 'CHUK_MCP_SERVER_VERSION'}
+        clean_env = {k: v for k, v in os.environ.items() if k != 'chuk_mcp_function_server_VERSION'}
         with patch.dict(os.environ, clean_env, clear=True):
             version = _get_version_from_env()
             assert version is None
     
     def test_env_variable_empty(self):
         """Test behavior when environment variable is empty."""
-        with patch.dict(os.environ, {'CHUK_MCP_SERVER_VERSION': ''}):
+        with patch.dict(os.environ, {'chuk_mcp_function_server_VERSION': ''}):
             version = _get_version_from_env()
             assert version == ''
 
@@ -93,14 +93,14 @@ class TestMetadataVersionDetection:
         
         version = _get_version_from_metadata()
         assert version == "2.5.1"
-        mock_version.assert_called_once_with("chuk-mcp-server")
+        mock_version.assert_called_once_with("chuk-mcp-function-server")
     
     @patch('importlib.metadata.version')
     def test_metadata_package_not_found(self, mock_version):
         """Test handling when package is not found in metadata."""
         # Mock the PackageNotFoundError
         from importlib.metadata import PackageNotFoundError
-        mock_version.side_effect = PackageNotFoundError("chuk-mcp-server")
+        mock_version.side_effect = PackageNotFoundError("chuk-mcp-function-server")
         
         version = _get_version_from_metadata()
         assert version is None
@@ -138,9 +138,9 @@ class TestVersionInfo:
 class TestVersionPriority:
     """Test version detection priority order."""
     
-    @patch('chuk_mcp_server._version._get_version_from_metadata')
-    @patch('chuk_mcp_server._version._get_version_from_pyproject')
-    @patch('chuk_mcp_server._version._get_version_from_env')
+    @patch('chuk_mcp_function_server._version._get_version_from_metadata')
+    @patch('chuk_mcp_function_server._version._get_version_from_pyproject')
+    @patch('chuk_mcp_function_server._version._get_version_from_env')
     def test_priority_metadata_wins(self, mock_env, mock_pyproject, mock_metadata):
         """Test that metadata has highest priority."""
         mock_metadata.return_value = "1.0.0-metadata"
@@ -150,9 +150,9 @@ class TestVersionPriority:
         version = get_version()
         assert version == "1.0.0-metadata"
     
-    @patch('chuk_mcp_server._version._get_version_from_metadata')
-    @patch('chuk_mcp_server._version._get_version_from_pyproject')
-    @patch('chuk_mcp_server._version._get_version_from_env')
+    @patch('chuk_mcp_function_server._version._get_version_from_metadata')
+    @patch('chuk_mcp_function_server._version._get_version_from_pyproject')
+    @patch('chuk_mcp_function_server._version._get_version_from_env')
     def test_priority_pyproject_second(self, mock_env, mock_pyproject, mock_metadata):
         """Test that pyproject has second priority."""
         mock_metadata.return_value = None
@@ -162,9 +162,9 @@ class TestVersionPriority:
         version = get_version()
         assert version == "1.0.0-pyproject"
     
-    @patch('chuk_mcp_server._version._get_version_from_metadata')
-    @patch('chuk_mcp_server._version._get_version_from_pyproject')
-    @patch('chuk_mcp_server._version._get_version_from_env')
+    @patch('chuk_mcp_function_server._version._get_version_from_metadata')
+    @patch('chuk_mcp_function_server._version._get_version_from_pyproject')
+    @patch('chuk_mcp_function_server._version._get_version_from_env')
     def test_priority_env_third(self, mock_env, mock_pyproject, mock_metadata):
         """Test that environment has third priority."""
         mock_metadata.return_value = None
@@ -174,9 +174,9 @@ class TestVersionPriority:
         version = get_version()
         assert version == "1.0.0-env"
     
-    @patch('chuk_mcp_server._version._get_version_from_metadata')
-    @patch('chuk_mcp_server._version._get_version_from_pyproject')
-    @patch('chuk_mcp_server._version._get_version_from_env')
+    @patch('chuk_mcp_function_server._version._get_version_from_metadata')
+    @patch('chuk_mcp_function_server._version._get_version_from_pyproject')
+    @patch('chuk_mcp_function_server._version._get_version_from_env')
     def test_fallback_version(self, mock_env, mock_pyproject, mock_metadata):
         """Test fallback version when all methods fail."""
         mock_metadata.return_value = None

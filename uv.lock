@@ -84,7 +84,7 @@ wheels = [
 ]
 
 [[package]]
-name = "chuk-mcp-server"
+name = "chuk-mcp-function-server"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
@@ -126,7 +126,7 @@ http = [
 requires-dist = [
     { name = "black", marker = "extra == 'dev'", specifier = ">=23.0.0" },
     { name = "chuk-mcp", specifier = ">=0.5" },
-    { name = "chuk-mcp-server", extras = ["http", "dev"], marker = "extra == 'full'" },
+    { name = "chuk-mcp-function-server", extras = ["http", "dev"], marker = "extra == 'full'" },
     { name = "fastapi", marker = "extra == 'http'", specifier = ">=0.116.1" },
     { name = "flake8", marker = "extra == 'dev'", specifier = ">=6.0.0" },
     { name = "httpx", marker = "extra == 'http'", specifier = ">=0.28.1" },

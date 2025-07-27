@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # tests/function_server/test_function_filter.py
 """
-Unit tests for the generic function_filter module of chuk_mcp_server.
+Unit tests for the generic function_filter module of chuk_mcp_function_server.
 """
 
 import inspect
@@ -11,14 +11,14 @@ from typing import Union
 
 # Import the modules under test
 try:
-    from chuk_mcp_server.function_server.function_filter import (
+    from chuk_mcp_function_server.function_filter import (
         FunctionFilter,
         GenericFunctionSpec,
         GenericFunctionProvider,
         FunctionSpec,
         FunctionProvider
     )
-    from chuk_mcp_server.config import ServerConfig
+    from chuk_mcp_function_server.config import ServerConfig
 except ImportError as e:
     raise ImportError(f"Could not import function_filter modules: {e}")
 
@@ -328,7 +328,7 @@ class TestFunctionFilter:
         assert len(result2) == 1  # Should still be cached result
         assert result2 == result1
     
-    @patch('chuk_mcp_server.function_server.function_filter.logger')
+    @patch('chuk_mcp_function_server.function_filter.logger')
     def test_get_all_functions_error_handling(self, mock_logger):
         """Test error handling when provider fails."""
         config = ServerConfig()

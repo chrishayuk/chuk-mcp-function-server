@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# src/chuk_mcp_server/function_server/function_filter.py
+# src/chuk_mcp_function_server/function_filter.py
 """
 Generic function filtering system for controlling which functions are exposed.
 This module is domain-agnostic and can be used with any function provider.
@@ -8,7 +8,7 @@ This module is domain-agnostic and can be used with any function provider.
 import logging
 import inspect
 from typing import Dict, Any, Optional, Protocol, Callable, List
-from ..config import ServerConfig
+from .config import ServerConfig
 
 logger = logging.getLogger(__name__)
 

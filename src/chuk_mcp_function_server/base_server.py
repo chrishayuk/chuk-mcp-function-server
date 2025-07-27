@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# src/chuk_mcp_server/base_server.py
+# src/chuk_mcp_function_server/base_server.py
 """
 Generic MCP server base class that can be extended for different domains.
 """

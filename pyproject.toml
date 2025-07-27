@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "chuk-mcp-server"
+name = "chuk-mcp-function-server"
 version = "0.1.0"
 description = "Generic configurable MCP server infrastructure"
 readme = "README.md"
@@ -53,19 +53,19 @@ dev = [
 
 # Full installation with all optional features
 full = [
-    "chuk-mcp-server[http,dev]"
+    "chuk-mcp-function-server[http,dev]"
 ]
 
 [project.scripts]
 # Generic server utilities
-mcp-server = "chuk_mcp_server.cli:main"
-mcp-server-info = "chuk_mcp_server._cli:main"
+mcp-server = "chuk_mcp_function_server.cli:main"
+mcp-server-info = "chuk_mcp_function_server._cli:main"
 
 [project.urls]
-Homepage = "https://github.com/chuk-mcp/chuk-mcp-server"
-Documentation = "https://github.com/chuk-mcp/chuk-mcp-server/blob/main/README.md"
-Repository = "https://github.com/chuk-mcp/chuk-mcp-server.git"
-Issues = "https://github.com/chuk-mcp/chuk-mcp-server/issues"
+Homepage = "https://github.com/chuk-mcp/chuk-mcp-function-server"
+Documentation = "https://github.com/chuk-mcp/chuk-mcp-function-server/blob/main/README.md"
+Repository = "https://github.com/chuk-mcp/chuk-mcp-function-server.git"
+Issues = "https://github.com/chuk-mcp/chuk-mcp-function-server/issues"
 
 # Setuptools configuration
 [tool.setuptools]
@@ -73,7 +73,7 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["chuk_mcp_server*"]
+include = ["chuk_mcp_function_server*"]
 
 # Pytest configuration
 [tool.pytest.ini_options]
@@ -121,7 +121,7 @@ filterwarnings = [
 
 # Coverage configuration (when pytest-cov is installed)
 [tool.coverage.run]
-source = ["src/chuk_mcp_server"]
+source = ["src/chuk_mcp_function_server"]
 omit = [
     "*/tests/*",
     "*/test_*.py",
@@ -168,7 +168,7 @@ extend-exclude = '''
 profile = "black"
 multi_line_output = 3
 line_length = 88
-known_first_party = ["chuk_mcp_server"]
+known_first_party = ["chuk_mcp_function_server"]
 
 [tool.mypy]
 python_version = "3.11"

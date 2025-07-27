@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# src/chuk_mcp_server/_version.py
+# src/chuk_mcp_function_server/_version.py
 """
-Version management utilities for chuk-mcp-server.
+Version management utilities for chuk-mcp-function-server.
 
 This module provides robust version detection that works in development,
 installed packages, and various deployment scenarios.
@@ -55,7 +55,7 @@ def _get_version_from_metadata() -> Optional[str]:
         else:
             from importlib_metadata import version, PackageNotFoundError
         
-        return version("chuk-mcp-server")
+        return version("chuk-mcp-function-server")
     
     except (ImportError, PackageNotFoundError):
         pass
@@ -129,7 +129,7 @@ def _get_version_from_pyproject() -> Optional[str]:
 def _get_version_from_env() -> Optional[str]:
     """Try to get version from environment variable."""
     import os
-    return os.environ.get("CHUK_MCP_SERVER_VERSION")
+    return os.environ.get("chuk_mcp_function_server_VERSION")
 
 def get_version_info() -> dict:
     """Get detailed version information for debugging."""
@@ -167,7 +167,7 @@ def print_version_info():
     """Print detailed version information for debugging."""
     info = get_version_info()
     
-    print(f"📦 chuk-mcp-server version: {info['version']}")
+    print(f"📦 chuk-mcp-function-server version: {info['version']}")
     print(f"🐍 Python version: {info['python_version']}")
     print(f"🔍 Detection method: {info['detection_method']}")
     print(f"✅ Available methods: {', '.join(info['available_methods'])}")
