@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# tests/function_server/test_function_filter.py
+# tests/test_function_filter.py
 """
 Unit tests for the generic function_filter module of chuk_mcp_function_server.
 """

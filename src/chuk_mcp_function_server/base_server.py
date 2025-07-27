@@ -12,14 +12,10 @@ import time
 from typing import Dict, Any, Optional, Callable, Protocol
 from abc import ABC, abstractmethod
 
-# Import the MCP server frameworks
-try:
-    from chuk_mcp.server import MCPServer
-    from chuk_mcp.protocol.types import ServerCapabilities
-    from chuk_mcp import JSONRPCMessage
-    _chuk_mcp_available = True
-except ImportError:
-    _chuk_mcp_available = False
+# Import the MCP server frameworks - chuk_mcp is a required dependency
+from chuk_mcp.server import MCPServer
+from chuk_mcp.protocol.types import ServerCapabilities
+from chuk_mcp import JSONRPCMessage
 
 from .config import ServerConfig
 
@@ -46,14 +42,11 @@ class BaseMCPServer(ABC):
             prompts={"listChanged": True} if config.enable_prompts else None
         )
         
-        if _chuk_mcp_available:
-            self.mcp_server = MCPServer(
-                name=config.server_name,
-                version=config.server_version,
-                capabilities=capabilities
-            )
-        else:
-            self.mcp_server = None
+        self.mcp_server = MCPServer(
+            name=config.server_name,
+            version=config.server_version,
+            capabilities=capabilities
+        )
         
         # Initialize based on configuration
         self._initialize_server()
