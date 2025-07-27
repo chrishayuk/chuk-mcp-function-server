@@ -1,0 +1,195 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chuk-mcp-server"
+version = "0.1.0"
+description = "Generic configurable MCP server infrastructure"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "chrishayuk", email = "chrishayuk@somejunkmailbox.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Communications"
+]
+requires-python = ">=3.11"
+
+# Core dependencies - always required
+dependencies = [
+    "chuk-mcp>=0.5",
+    "pyyaml>=6.0.2",
+]
+
+# Optional dependency groups
+[project.optional-dependencies]
+# HTTP transport support
+http = [
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+    "httpx>=0.28.1"
+]
+
+# Development dependencies
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.0.0"
+]
+
+# Full installation with all optional features
+full = [
+    "chuk-mcp-server[http,dev]"
+]
+
+[project.scripts]
+# Generic server utilities
+mcp-server = "chuk_mcp_server.cli:main"
+mcp-server-info = "chuk_mcp_server._cli:main"
+
+[project.urls]
+Homepage = "https://github.com/chuk-mcp/chuk-mcp-server"
+Documentation = "https://github.com/chuk-mcp/chuk-mcp-server/blob/main/README.md"
+Repository = "https://github.com/chuk-mcp/chuk-mcp-server.git"
+Issues = "https://github.com/chuk-mcp/chuk-mcp-server/issues"
+
+# Setuptools configuration
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["chuk_mcp_server*"]
+
+# Pytest configuration
+[tool.pytest.ini_options]
+# Test discovery
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+# Python path - tell pytest where to find our source code
+pythonpath = ["src"]
+
+# Output configuration
+addopts = [
+    "-v",                     # Verbose output
+    "--tb=short",            # Short traceback format
+    "--strict-markers",      # Strict marker checking
+    "--color=yes",           # Colored output
+    "--durations=10",        # Show 10 slowest tests
+]
+
+# Asyncio configuration
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+# Test markers
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+    "network: marks tests that require network access",
+    "mock: marks tests that use extensive mocking",
+]
+
+# Minimum pytest version
+minversion = "7.0"
+
+# Filter out warnings
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+    "ignore:.*unclosed.*:ResourceWarning",
+    "ignore::pytest.PytestDeprecationWarning",
+]
+
+# Coverage configuration (when pytest-cov is installed)
+[tool.coverage.run]
+source = ["src/chuk_mcp_server"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__pycache__/*",
+    "*/.*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if __name__ == .__main__.:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if False:",
+]
+show_missing = true
+precision = 2
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+# Development tool configurations
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["chuk_mcp_server"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "chuk_mcp.*",
+    "fastapi.*",
+    "uvicorn.*",
+    "yaml.*"
+]
+ignore_missing_imports = true
