@@ -384,9 +384,9 @@ class TestGenericFunctionFiltering:
         assert len(filtered) == len(all_functions)
         assert filtered == all_functions
     
-    def test_function_whitelist_filtering(self):
-        """Test filtering with function whitelist."""
-        config = ServerConfig(function_whitelist=["add", "upper"])
+    def test_function_allowlist_filtering(self):
+        """Test filtering with function allowlist."""
+        config = ServerConfig(function_allowlist=["add", "upper"])
         filter_obj = self.create_test_filter_with_functions(config)
         
         filtered = filter_obj.get_filtered_functions()
@@ -398,9 +398,9 @@ class TestGenericFunctionFiltering:
         assert "subtract" not in function_names
         assert "complex" not in function_names
     
-    def test_function_blacklist_filtering(self):
-        """Test filtering with function blacklist."""
-        config = ServerConfig(function_blacklist=["subtract", "complex"])
+    def test_function_denylist_filtering(self):
+        """Test filtering with function denylist."""
+        config = ServerConfig(function_denylist=["subtract", "complex"])
         filter_obj = self.create_test_filter_with_functions(config)
         
         filtered = filter_obj.get_filtered_functions()
@@ -412,9 +412,9 @@ class TestGenericFunctionFiltering:
         assert "subtract" not in function_names
         assert "complex" not in function_names
     
-    def test_domain_whitelist_filtering(self):
-        """Test filtering with domain whitelist."""
-        config = ServerConfig(domain_whitelist=["math"])
+    def test_domain_allowlist_filtering(self):
+        """Test filtering with domain allowlist."""
+        config = ServerConfig(domain_allowlist=["math"])
         filter_obj = self.create_test_filter_with_functions(config)
         
         filtered = filter_obj.get_filtered_functions()
@@ -423,9 +423,9 @@ class TestGenericFunctionFiltering:
         domains = [spec.namespace for spec in filtered.values()]
         assert all(domain == "math" for domain in domains)
     
-    def test_domain_blacklist_filtering(self):
-        """Test filtering with domain blacklist."""
-        config = ServerConfig(domain_blacklist=["advanced"])
+    def test_domain_denylist_filtering(self):
+        """Test filtering with domain denylist."""
+        config = ServerConfig(domain_denylist=["advanced"])
         filter_obj = self.create_test_filter_with_functions(config)
         
         filtered = filter_obj.get_filtered_functions()
@@ -435,8 +435,8 @@ class TestGenericFunctionFiltering:
         assert "advanced" not in domains
     
     def test_category_filtering(self):
-        """Test filtering with category whitelist."""
-        config = ServerConfig(category_whitelist=["arithmetic"])
+        """Test filtering with category allowlist."""
+        config = ServerConfig(category_allowlist=["arithmetic"])
         filter_obj = self.create_test_filter_with_functions(config)
         
         filtered = filter_obj.get_filtered_functions()
@@ -448,8 +448,8 @@ class TestGenericFunctionFiltering:
     def test_combined_filtering(self):
         """Test filtering with multiple filter types combined."""
         config = ServerConfig(
-            domain_whitelist=["math", "text"],
-            function_blacklist=["subtract"]
+            domain_allowlist=["math", "text"],
+            function_denylist=["subtract"]
         )
         filter_obj = self.create_test_filter_with_functions(config)
         
@@ -459,15 +459,15 @@ class TestGenericFunctionFiltering:
         function_names = [spec.function_name for spec in filtered.values()]
         assert "add" in function_names
         assert "upper" in function_names
-        assert "subtract" not in function_names  # Blacklisted
-        assert "complex" not in function_names   # Not in domain whitelist
+        assert "subtract" not in function_names  # denylisted
+        assert "complex" not in function_names   # Not in domain allowlist
 
 class TestFunctionFilterUtilities:
     """Test utility methods of FunctionFilter."""
     
     def test_get_function_stats(self):
         """Test function statistics generation."""
-        config = ServerConfig(domain_whitelist=["math"])
+        config = ServerConfig(domain_allowlist=["math"])
         filter_obj = TestGenericFunctionFiltering().create_test_filter_with_functions(config)
         
         stats = filter_obj.get_function_stats()

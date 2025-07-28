@@ -13,7 +13,7 @@ Perfect for exposing mathematical calculations, data transformations, and statel
 ### 🏗️ **Infrastructure**
 - **Dual Transport**: STDIO and HTTP support out of the box
 - **Configuration Management**: YAML, JSON, environment variables, and CLI args
-- **Function Filtering**: Flexible whitelist/blacklist system
+- **Function Filtering**: Flexible allowlist/denylist system
 - **Error Handling**: Robust error handling with timeouts and recovery
 - **Performance**: Sub-millisecond latency for pure functions (2,700+ ops/sec)
 
@@ -168,7 +168,7 @@ enable_prompts: false
 log_level: "INFO"
 
 # Function filtering
-function_whitelist:
+function_allowlist:
   - add
   - multiply
   - divide
@@ -185,7 +185,7 @@ max_concurrent_calls: 10
 export MCP_SERVER_TRANSPORT=http
 export MCP_SERVER_PORT=8000
 export MCP_SERVER_LOG_LEVEL=DEBUG
-export MCP_SERVER_FUNCTION_WHITELIST=add,multiply
+export MCP_SERVER_FUNCTION_allowlist=add,multiply
 ```
 
 ## 🏛️ Architecture
@@ -271,10 +271,10 @@ Control which functions are exposed:
 
 ```python
 # Configuration
-function_whitelist = ["add", "multiply"]  # Only these functions
-function_blacklist = ["dangerous_function"]  # Exclude these
-domain_whitelist = ["math", "conversion"]  # Only these domains
-category_whitelist = ["safe"]  # Only these categories
+function_allowlist = ["add", "multiply"]  # Only these functions
+function_denylist = ["dangerous_function"]  # Exclude these
+domain_allowlist = ["math", "conversion"]  # Only these domains
+category_allowlist = ["safe"]  # Only these categories
 ```
 
 ## 📊 Performance
@@ -398,7 +398,7 @@ Send JSON-RPC messages to `/mcp`:
 
 ## 🔒 Security Considerations
 
-- **Function Filtering**: Use whitelist/blacklist to control exposed functions
+- **Function Filtering**: Use allowlist/denylist to control exposed functions
 - **Input Validation**: All tool schemas are validated
 - **Timeout Protection**: Configurable computation timeouts prevent hanging
 - **Resource Limits**: Memory and CPU monitoring with limits

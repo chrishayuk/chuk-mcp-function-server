@@ -142,12 +142,12 @@ def mock_config():
         mock.enable_resources = True
         mock.enable_prompts = True
         mock.log_level = "DEBUG"
-        mock.function_whitelist = []
-        mock.function_blacklist = []
-        mock.domain_whitelist = []
-        mock.domain_blacklist = []
-        mock.category_whitelist = []
-        mock.category_blacklist = []
+        mock.function_allowlist = []
+        mock.function_denylist = []
+        mock.domain_allowlist = []
+        mock.domain_denylist = []
+        mock.category_allowlist = []
+        mock.category_denylist = []
         mock.cache_strategy = "smart"
         mock.cache_size = 1000
         mock.computation_timeout = 30.0
@@ -250,10 +250,10 @@ enable_tools: true
 enable_resources: true
 enable_prompts: true
 log_level: "INFO"
-function_whitelist: []
-function_blacklist: []
-domain_whitelist: []
-domain_blacklist: []
+function_allowlist: []
+function_denylist: []
+domain_allowlist: []
+domain_denylist: []
 cache_strategy: "smart"
 cache_size: 500
 computation_timeout: 15.0

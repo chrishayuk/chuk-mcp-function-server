@@ -209,31 +209,31 @@ class FunctionFilter:
     def _should_include_function(self, func_spec: FunctionSpec) -> bool:
         """Determine if a function should be included based on filters."""
         
-        # Check function whitelist (if specified, only these are allowed)
-        if self.config.function_whitelist:
-            if func_spec.function_name not in self.config.function_whitelist:
+        # Check function allowlist (if specified, only these are allowed)
+        if self.config.function_allowlist:
+            if func_spec.function_name not in self.config.function_allowlist:
                 return False
         
-        # Check function blacklist
-        if func_spec.function_name in self.config.function_blacklist:
+        # Check function denylist
+        if func_spec.function_name in self.config.function_denylist:
             return False
         
-        # Check domain whitelist (if specified, only these domains are allowed)
-        if self.config.domain_whitelist:
-            if func_spec.namespace not in self.config.domain_whitelist:
+        # Check domain allowlist (if specified, only these domains are allowed)
+        if self.config.domain_allowlist:
+            if func_spec.namespace not in self.config.domain_allowlist:
                 return False
         
-        # Check domain blacklist
-        if func_spec.namespace in self.config.domain_blacklist:
+        # Check domain denylist
+        if func_spec.namespace in self.config.domain_denylist:
             return False
         
-        # Check category whitelist (if specified, only these categories are allowed)
-        if self.config.category_whitelist:
-            if func_spec.category not in self.config.category_whitelist:
+        # Check category allowlist (if specified, only these categories are allowed)
+        if self.config.category_allowlist:
+            if func_spec.category not in self.config.category_allowlist:
                 return False
         
-        # Check category blacklist
-        if func_spec.category in self.config.category_blacklist:
+        # Check category denylist
+        if func_spec.category in self.config.category_denylist:
             return False
         
         return True
@@ -276,12 +276,12 @@ class FunctionFilter:
             "categories_filtered": filtered_categories,
             "providers": [p.get_provider_name() for p in self.providers],
             "filtering_active": bool(
-                self.config.function_whitelist or 
-                self.config.function_blacklist or
-                self.config.domain_whitelist or 
-                self.config.domain_blacklist or
-                self.config.category_whitelist or 
-                self.config.category_blacklist
+                self.config.function_allowlist or 
+                self.config.function_denylist or
+                self.config.domain_allowlist or 
+                self.config.domain_denylist or
+                self.config.category_allowlist or 
+                self.config.category_denylist
             )
         }
     

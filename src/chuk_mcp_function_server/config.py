@@ -17,11 +17,13 @@ import yaml
 logger = logging.getLogger(__name__)
 
 def _get_package_version():
-    """Get package version dynamically."""
+    """Get package version dynamically - FIXED to avoid import issues."""
     try:
+        # Try importing from the _version module first
         from ._version import __version__
         return __version__
     except (ImportError, AttributeError):
+        # Fallback to default version
         return "0.1.0"
 
 @dataclass
@@ -39,12 +41,12 @@ class ServerConfig:
     enable_resources: bool = True
     
     # Function filtering
-    function_whitelist: List[str] = field(default_factory=list)
-    function_blacklist: List[str] = field(default_factory=list)
-    domain_whitelist: List[str] = field(default_factory=list)
-    domain_blacklist: List[str] = field(default_factory=list)
-    category_whitelist: List[str] = field(default_factory=list)
-    category_blacklist: List[str] = field(default_factory=list)
+    function_allowlist: List[str] = field(default_factory=list)
+    function_denylist: List[str] = field(default_factory=list)
+    domain_allowlist: List[str] = field(default_factory=list)
+    domain_denylist: List[str] = field(default_factory=list)
+    category_allowlist: List[str] = field(default_factory=list)
+    category_denylist: List[str] = field(default_factory=list)
     
     # Performance settings
     cache_strategy: str = "smart"
@@ -118,10 +120,10 @@ class ServerConfig:
             'MCP_SERVER_ENABLE_TOOLS': ('enable_tools', lambda x: x.lower() == 'true'),
             'MCP_SERVER_ENABLE_PROMPTS': ('enable_prompts', lambda x: x.lower() == 'true'),
             'MCP_SERVER_ENABLE_RESOURCES': ('enable_resources', lambda x: x.lower() == 'true'),
-            'MCP_SERVER_FUNCTION_WHITELIST': ('function_whitelist', lambda x: x.split(',')),
-            'MCP_SERVER_FUNCTION_BLACKLIST': ('function_blacklist', lambda x: x.split(',')),
-            'MCP_SERVER_DOMAIN_WHITELIST': ('domain_whitelist', lambda x: x.split(',')),
-            'MCP_SERVER_DOMAIN_BLACKLIST': ('domain_blacklist', lambda x: x.split(',')),
+            'MCP_SERVER_FUNCTION_ALLOWLIST': ('function_allowlist', lambda x: x.split(',')),
+            'MCP_SERVER_FUNCTION_DENYLIST': ('function_denylist', lambda x: x.split(',')),
+            'MCP_SERVER_DOMAIN_ALLOWLIST': ('domain_allowlist', lambda x: x.split(',')),
+            'MCP_SERVER_DOMAIN_DENYLIST': ('domain_denylist', lambda x: x.split(',')),
             'MCP_SERVER_CACHE_STRATEGY': 'cache_strategy',
             'MCP_SERVER_CACHE_SIZE': ('cache_size', int),
             'MCP_SERVER_LOG_LEVEL': 'log_level',
